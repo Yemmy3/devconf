@@ -1,0 +1,46 @@
+{% extends 'user/layout.html' %}
+
+{% block header%}
+  Be Social
+{% endblock %}
+ 
+{% block content%}
+<div class="container">
+  <div class="row">
+    <div class="col">
+      {%set m = get_flashed_messages()%}
+      {% for msg in m%}
+        <p class="alert alert-success">   {{ msg}}</p>
+      {%endfor %}
+    </div>
+  </div>
+  {% if allposts %}
+  {% for a in allposts  %}
+  <div class="row">
+    <div class="col">
+      <p><a href="/makepost" class="btn btn-lg btn-warning">Crete New Post</a></p>
+      <h2>{{a.post_title}}</h2>
+      <p>{{a.post_content}}</p>
+      <p>
+        <i>Posted By:</i><span> {{a.postuser.user_fname}} {{a.postuser.user_lname}}</span>
+        <i>Date:</i><span>{{a.post_date}}</span>
+        <i>({{a.comments|count}} Comments)</i>
+      </p>
+    </div>
+  </div>
+</div>
+  {% endfor %}
+  {% else %}
+  <div class="row">
+    <div class="col">
+      <div class="alert alert-warning">No Post have been made yet.
+        <a href="/makepost" class="alert-link">Start a Conversation</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+    
+ 
+    
+{% endblock content%}
+ 

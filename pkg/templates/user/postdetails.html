@@ -1,0 +1,67 @@
+{% extends 'user/layout.html' %}
+{% block header%}
+Store
+{% endblock %}
+
+{% block content%}
+<style type="text/css">
+label{font-size:24px; font-weight:bold}
+</style>
+<div class="container">
+<div class="row">
+    <div class="col">      
+        <h2>{{ deets.post_title}}</h2>
+        <p>{{ deets.post_content }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col" id="allcomments">      
+        <h4>Comments</h4>
+        {% if deets.comments|count == 0%}
+    <p>No comment has been made yet</p>
+        {% else %}
+        {% for d in deets.comments %}
+<p style="color:blue; font-family:'Courier New', Courier, monospace">{{ d.comment_content }}</p>
+        {%endfor%}
+        {% endif %}
+    </div>
+</div>
+<form id="myform">
+    
+<textarea name="comment" class="form-control" id="comment"></textarea>
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="postid" value="{{deets.post_id}}">
+<button class="btn btn-danger" id="btn" type="button">Send Comment</button>
+</form>
+</div>
+{% endblock content%}
+{% block customjs%}
+<script type="text/javascript"> 
+$(document).ready(function(){
+    $('#btn').click(function(){
+        var data2send = $('#myform').serialize()       
+        $.ajax({
+        url:"/details/{{deets.post_id}}",
+        data:data2send,
+        type:'post',
+        dataType:'json',
+        beforeSend:function(){
+            $('#btn').html('Please wait.')
+        },
+        success:function(response){ //if response is an object 
+            //response['comment'] and response['madeby']
+            $('#allcomments').append("<p style='font-family:Courier New;color:blue'>"+response['comment']+"</p><span>Made By"+response['madeby']+"</span>")
+            $('#comment').val('')
+            $('#btn').html('Send Comment')
+        },
+        error:function(errmsg){
+            console.log(errmsg)
+            $('#btn').html('Send Comment')
+        }
+        
+        })
+    })
+})
+
+</script>
+{% endblock %}

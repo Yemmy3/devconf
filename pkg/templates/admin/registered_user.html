@@ -1,0 +1,42 @@
+{% extends 'admin/adminlayout.html' %}
+
+{% block header %}
+Registered User
+{% endblock header %}
+
+{% block content %}
+    <a href="" class="btn btn-primary mb-2">Add new user</a> 
+    <table class="table table-striped">
+        <div class="col-10 ms-5">
+            <tr>
+                <th>S/N</th>
+                <th>Full Name</th>
+                <th>State</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </div>
+        
+        {% if regs %}
+        
+        {% for user,state in regs %}
+        <div class="col-10 ms-5">
+            <tr>
+                <td>{{loop.index}}</td>
+                <td>{{user.user_fname}} {{user.user_lname}}</td>
+                <td>{{state.state_name}}</td>
+                <td>{{user.user_email}}</td>
+                <td> <a href="/admin/checkdetails/{{user.user_id}}"> Details</a> | <a href="/admin/delete/{{user.user_id}}" onclick="return confirm('Are you sure you want to delete this user?')"> Delete User</a></td>
+            </tr> 
+        </div>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">No User Found</td>
+        </tr> 
+        {% endif %}
+            
+    </table>
+{% endblock content %}
+    
+    

@@ -1,0 +1,44 @@
+{% extends 'user/layout.html' %}
+
+{% block header %}
+    Create Post
+{% endblock header %}
+
+
+{% block content %}
+    <form action="" method="post">
+        <div class="container">
+            <div class="row">
+                <label> <a href="">{{mak.post_title.label}}</a></label>
+                <div class="col-10">
+                    {{mak.post_title (class_="form-control mt-3 mb-3")}}
+                </div>
+            </div>
+            {{mak.hidden_tag()}}
+            <div class="row">
+                <label>{{mak.post_content.label}}</label>
+                <div class="col-10">
+                    {{mak.post_content(class_="form-control mb-3")}}
+                </div>
+            </div>
+            {{mak.csrf_token}}
+            <div class="row">
+                <div class="col-10">
+                    {{mak.submit (class_="form-control btn btn-warning",onclick="validate(event)")}}
+                </div>
+            </div>
+        </div>
+    </form>
+<script type="text/javascript">
+    function validate(e){
+        var ptitle = document.getElementById('post_title').value
+        var pcontent = document.getElementById('post_content').value
+        if (ptitle == '' || pcontent == ''){
+            alert('Please complete the form')
+            e.preventDefault()
+        }
+    }
+</script>
+{% endblock content %}
+    
+    

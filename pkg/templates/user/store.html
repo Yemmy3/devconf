@@ -1,0 +1,36 @@
+{% extends 'user/layout.html' %}
+
+{% block header%}
+  Store     
+{% endblock %}
+ 
+{% block content%}
+<form action="" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<table class="table table-striped">
+  <tr>
+      <th>Add Product</th>
+      <th>Product Name</th>
+      <th>Product Price</th>
+  </tr>
+  
+  {% if product %}
+  
+  {% for p in product %}
+  <tr>
+      <td> <input type="checkbox" name="productid" value="{{ p.product_id }}"></td>
+      <td>{{p.product_name}}</td>
+      <td>N {{p.product_price}}</td>
+  </tr> 
+  {% endfor %}
+  {% else %}
+  <tr>
+      <td colspan="4">No Product Found</td>
+  </tr> 
+  {% endif %}
+</table>
+<button class="btn btn-warning">Buy</button>
+</form>
+
+{% endblock content%}
+ 

@@ -1,0 +1,66 @@
+{% extends 'admin/adminlayout.html' %}
+
+{% block header %}
+<span class="dashboard">Dashboard</span>
+{% endblock header %}
+  
+
+{% block content %}
+<div class="overview-boxes">
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Total Registration {{totalreg}}</div>
+          
+    </div>
+  </div>
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Total Sales</div>
+      
+    </div>
+  </div>
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Total Profit</div>
+      
+    </div>
+  </div>
+  <div class="box">
+    <div class="right-side">
+      <div class="box-topic">Total Return</div>
+     
+    </div>
+  </div>
+</div>
+
+<div class="sales-boxes">
+  <div class="recent-sales box">
+    <div class="sales-details">
+      <ul class="details">
+        <li class="topic">Date</li>
+        
+      </ul>
+      <ul class="details">
+      <li class="topic">Customer</li>
+      
+    </ul>
+    <ul class="details">
+      <li class="topic">Sales</li>
+      
+    </ul>
+    <ul class="details">
+      <li class="topic">Total</li>
+      
+    </ul>
+    </div>
+    <div class="button">
+      <a href="#">See All</a>
+    </div>
+  </div>
+  <div class="top-sales box">
+    <div class="title">Top Seling Product</div>
+    
+  </div>
+</div>
+  
+{% endblock content %}

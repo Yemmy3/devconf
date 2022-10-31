@@ -1,0 +1,100 @@
+{% extends 'user/layout.html' %}
+
+{% block header%}
+   <h2>Edit User Profile</h2>     
+{% endblock %}
+ 
+{% block content%}
+
+<form action="{{url_for('update_profile')}}" method="post" enctype="multipart/form-data">
+  <div class="row">
+    <label>Upload Picture</label>
+    <div class="col-8">
+      <input type="file" name="pix">
+    </div>
+  </div>
+  <div  class="row">
+    <label>First Name</label>
+    <div class="col-8">
+      <input type="text" name="fname" value="{{deets.user_fname}}" class="form-control mb-3">
+    </div>
+  </div>
+
+  <div  class="row">
+    <label>Last Name</label>
+    <div class="col-8">
+      <input type="text" name="lname" value="{{deets.user_lname}}" class="form-control mb-3">
+    </div>
+  </div>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div  class="row">
+    <label>State</label>
+    <div class="col-8">
+      <select name="state" class="form-control mb-3" id="state">
+
+         {% if states %}
+         
+         {% for s in states %}
+          <option value="{{s.state_id}}">{{s.state_name}}</option> 
+         {% endfor %}
+          
+          
+         {% endif %}
+          
+      </select>
+    </div>
+  </div>
+
+  <div  class="row">
+    <label>LGA</label>
+    <div class="col-8">
+      <select class="form-control mb-3"id="lgas"></select>
+      
+    </div>
+
+
+  <div  class="row">
+    <label>Phone</label>
+    <div class="col-8">
+      <input type="text" name="phone" value="{{deets.user_phone}}" class="form-control mb-3"> 
+    </div>
+
+  <div  class="row">
+    <div class="col-8">
+      <button class="form-control btn btn-dark">Update</button>
+    </div>
+  </div>
+  
+  
+{% endblock content%}
+
+
+{% block customjs %}
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // when select with id state changes
+    $('#state').change(function() {
+      var selected_state = $(this).val()
+      var data2send = {"stateid" : selected_state}
+      $.ajax({
+        url:"{{url_for('getlga')}}",
+        type:"get",
+        data:data2send,
+        dataType:'text',
+        success:function(msg) {
+          $('#lgas').html(msg)
+        },
+        error:function(err) {
+          console.log(err)
+        },
+        // beforeSend:function() {
+        //   $('button').html('Please wait....')
+        // }
+      })
+    })
+  })
+    
+  </script>
+{% endblock customjs %}
+  
